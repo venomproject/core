@@ -29,7 +29,7 @@
                 <!-- Main content -->
                 <section class="content">
                 
-                 	
+                 	@include('layouts.includes.alert_message')
                 
                     @yield('content')
                 </section><!-- /.content -->
