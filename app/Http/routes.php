@@ -45,6 +45,6 @@ Route::group(['middleware' => 'web'], function () {
 			//echo 'tylko zalogowani';
 			
 			
-			Route::resource('/pages', 'PagesController@index');
+			Route::resource('/pages', 'PagesController');
 
 		});

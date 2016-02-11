@@ -1,6 +1,6 @@
 @extends('admin.template') @section('content') 
 
-{!! Form::open(['action' => 'PagesController@store']) !!}
+{!! Form::open(['action' => 'Admin\PagesController@store']) !!}
 <div class="row">
 	<div class="col-xs-8">
 

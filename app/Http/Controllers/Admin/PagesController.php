@@ -8,8 +8,10 @@ use Illuminate\Http\Request;
 
 class PagesController extends Controller {
 	public function __construct() {
-		/* $this->beforeFilter ( function () {
-		} ); */
+		/*
+		 * $this->beforeFilter ( function () {
+		 * } );
+		 */
 	}
 	public function usun($id) {
 		dd ( request () );
@@ -23,10 +25,11 @@ class PagesController extends Controller {
 	public function index() {
 		
 		// return Pages::first();
+		$rows = Pages::orderBy ( 'id', 'desc' )->paginate ( 5 );
 		
-		$users = Pages::orderBy ( 'id', 'desc' )->paginate ( 5 );
-		
-		return view ( 'admin.pages.create' );
+		return view ( 'admin.pages.index', [ 
+				'pages' => $rows 
+		] );
 	}
 	
 	/**

@@ -146,9 +146,13 @@ return [
         Illuminate\Session\SessionServiceProvider::class,
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
-        Illuminate\View\ViewServiceProvider::class,
-Barryvdh\Debugbar\ServiceProvider::class,
-		 'TwigBridge\ServiceProvider',
+    	Illuminate\View\ViewServiceProvider::class,
+    		
+    	Barryvdh\Debugbar\ServiceProvider::class,
+		Collective\Html\HtmlServiceProvider::class, 
+		'TwigBridge\ServiceProvider',
+    	
+        
         /*
          * Application Service Providers...
          */
@@ -202,8 +206,11 @@ Barryvdh\Debugbar\ServiceProvider::class,
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
-		'Debugbar' => Barryvdh\Debugbar\Facade::class,
- 'Twig' => 'TwigBridge\Facade\Twig',
+		
+    	'Debugbar' => Barryvdh\Debugbar\Facade::class,
+ 		'Twig' => 'TwigBridge\Facade\Twig',
+    	'Form' => Collective\Html\FormFacade::class,
+      'Html' => Collective\Html\HtmlFacade::class,
     ],
 
 ];
