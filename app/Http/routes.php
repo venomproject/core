@@ -27,7 +27,6 @@
 
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
-	
 });
 
 
@@ -38,9 +37,13 @@ Route::group(['middleware' => 'web'], function () {
 	});
 		
 	
-		Route::group(['middleware' => 'web', 'prefix' => '/admin', 'namespace' => 'Admin'], function () {
+		Route::group(['middleware' => 'auth', 'prefix' => '/admin', 'namespace' => 'Admin'], function () {
 			//echo 'tylko zalogowani';
 			
+			Route::get('/', function () {
+				
+				return View::make('admin.dashboard');
+			});
 			
 			Route::resource('/pages', 'PagesController');
 

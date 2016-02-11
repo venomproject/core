@@ -37,9 +37,10 @@
 											Dropdown</span>
 									</button>
 									<ul class="dropdown-menu" role="menu">
-										<li><a
-											href="{{ action('PagesController@edit', ['id' => $page->id]) }}"><i
-												class="fa  fa-copy"></i>Kopia</a></li>
+										<li>
+										
+										{!! link_to('admin/pages/'.$page->id.'/edit', 'Kopia',  array('class' => '')) !!}	
+										</li>
 
 										<li>{!! Form::open(array('method' => 'DELETE', 'route' =>
 											array('admin.pages.destroy', $page->id))) !!} 
