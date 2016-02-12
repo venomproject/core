@@ -99,7 +99,7 @@ class PagesController extends Controller {
 	 */
 	public function edit($id) {
 		$page = Pages::find ( $id );
-		return view ( 'admin.pages.edit' )->with (['urlPath' => 'pages','title' => 'Edycja', 'page' => $page] );
+		return view ( 'admin.pages.edit' )->with (['page' => $page,'urlPath' => 'pages','title' => 'Edycja'] );
 	}
 	
 	/**
