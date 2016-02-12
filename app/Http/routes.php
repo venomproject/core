@@ -37,8 +37,9 @@ Route::group(['middleware' => 'web'], function () {
 	});
 		
 	
-		Route::group(['middleware' => 'auth', 'prefix' => '/admin', 'namespace' => 'Admin'], function () {
-			//echo 'tylko zalogowani';
+		Route::group(['middleware' => ['web','auth'], 'prefix' => '/admin', 'namespace' => 'Admin'], function () {
+	
+	//echo 'tylko zalogowani';
 			
 			Route::get('/', function () {
 				

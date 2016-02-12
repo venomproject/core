@@ -17,7 +17,7 @@ class CreatePagesTable extends Migration {
 			$table->date ( 'public_date' );
 			$table->date ( 'create_date' );
 			$table->integer ( 'position' )->default ( 0 );
-			$table->string ( 'seo' );
+			$table->string ( 'seo' )->unique();
 			$table->string ( 'meta_keywords' )->nullable ();
 			$table->string ( 'meta_description' )->nullable ();
 			$table->string ( 'meta_title' )->nullable ();

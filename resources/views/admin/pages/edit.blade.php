@@ -1,35 +1,82 @@
-@extends('admin.template') @section('content') 
+@extends('admin.template')
 
-{!! Form::model($page, array('route' => array('admin.pages.update', $page->id), 'method' => 'PUT')) !!}
+@section('content') 
 
+{!! Form::model($page,array('route' => array('admin.pages.update', $page->id), 'method' => 'PUT')) !!}
 <div class="row">
-	<div class="col-xs-8">
+	<div class="col-md-9">
 
-		<div class="box">
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#textTab" data-toggle="tab">Treść</a></li>
+				<li><a href="#galleryTab" data-toggle="tab">Zdjęcia</a></li>
+				<li><a href="#seoTab" data-toggle="tab">Ustawienia SEO</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="active tab-pane" id="textTab">
+					<div class="box-body">
+						<div class="form-group">{!! Form::label('name') !!} {!!
+							Form::text('name', null, array( 'class' =>
+							'form-control','placeholder' => 'Nazwa strony')) !!}</div>
 
-			<div class="box-header">
-				<h3 class="box-title">Lista</h3>
+						<div class="form-group">{!! Form::label('description') !!} {!!
+							Form::textarea('description', null, array('class' =>
+							'form-control','placeholder' => 'Opis strony')) !!}</div>
+					</div>
+				</div>
+
+				<div class="tab-pane" id="galleryTab">Galeria</div>
+
+				<div class="tab-pane" id="seoTab">
+
+					<div class="box-body">
+						<div class="form-group">{!! Form::label('seo') !!} {!!
+							Form::text('seo', null, array('class' => 'form-control',
+							'placeholder' => 'przyjazny link')) !!}</div>
+
+						<div class="form-group">{!! Form::label('meta_title') !!} {!!
+							Form::text('meta_title', null, array('class' =>
+							'form-control','placeholder' => 'tytuł strony')) !!}</div>
+
+						<div class="form-group">{!! Form::label('meta_keywords') !!} {!!
+							Form::text('meta_keywords', null, array('class' =>
+							'form-control','placeholder' => 'słowa kluczowe')) !!}</div>
+
+						<div class="form-group">{!! Form::label('meta_description') !!}
+							{!! Form::textarea('meta_description', null, array('placeholder'
+							=> 'meta opis','class' => 'form-control')) !!}</div>
+					</div>
+
+				</div>
 			</div>
-
-			<div class="box-body">
-
-
-				<div class="form-group">{!! Form::label('name') !!} {!!
-					Form::text('name', null, array('placeholder' => 'Nazwa strony',
-					'class' => 'form-control')) !!}</div>
-
-				<div class="form-group">{!! Form::label('description') !!} {!!
-					Form::textarea('description', null, array('placeholder' => 'Opis
-					strony', 'class' => 'form-control')) !!}</div>
-
-			</div>
-			<div class="box-footer">{!! Form::submit('Zapisz', array('class' =>
-				'btn btn-primary pull-right')) !!}</div>
-
 		</div>
 
+
 	</div>
-	<div class="col-xs-4">
+	<div class="col-md-3">
+
+		<div class="box box-primary">
+			<div class="box-body box-profile">
+				<img class="profile-user-img img-responsive img-circle"
+					src="https://cdn2.iconfinder.com/data/icons/bitsies/128/Info-128.png"
+					alt="User profile picture">
+
+				<h3 class="profile-username text-center">{{ $page->name }}</h3>
+
+				<p class="text-muted text-center">{{URL::to('/pages')}}/{{ $page->seo}}</p>
+
+				<ul class="list-group list-group-unbordered">
+					<li class="list-group-item"><b>Data utworzenia</b> <a
+						class="pull-right">{{\Carbon\Carbon::createFromFormat('Y-m-d',
+							$page->create_date)->format('d-m-Y')}}</a></li>
+				</ul>
+
+				{!! Form::submit('Zapisz', array('class' => 'btn btn-block
+				btn-primary btn-lg ')) !!}
+			</div>
+			<!-- /.box-body -->
+		</div>
+
 
 
 		<div class="box box-success">
@@ -45,7 +92,8 @@
 							<i class="fa fa-calendar"></i>
 						</div>
 						{!! Form::text('create_date',
-						\Carbon\Carbon::createFromFormat('Y-m-d', $page->create_date)->format('d-m-Y'), array('placeholder' =>
+						\Carbon\Carbon::createFromFormat('Y-m-d',
+						$page->create_date)->format('d-m-Y'), array('placeholder' =>
 						'dd-mm-rrrr','class' => 'form-control')) !!}
 					</div>
 				</div>
@@ -56,54 +104,42 @@
 							<i class="fa fa-calendar"></i>
 						</div>
 						{!! Form::text('public_date',
-						\Carbon\Carbon::createFromFormat('Y-m-d', $page->public_date)->format('d-m-Y'), array('placeholder' =>
+						\Carbon\Carbon::createFromFormat('Y-m-d',
+						$page->public_date)->format('d-m-Y'), array('placeholder' =>
 						'dd-mm-rrrr','class' => 'form-control')) !!}
 					</div>
 				</div>
 
 				<div class="checkbox">
-					<label>{!! Form::checkbox('show_menu', null, false,
-						array('class' => 'minimal')) !!} Wyświetl w menu</label>
+					<label>{!! Form::checkbox('show_menu', null, $page->show_menu, array('class'
+						=> 'minimal')) !!} Wyświetl w menu</label>
 				</div>
 
 				<div class="checkbox">
-					<label>{!! Form::checkbox('show_footer', null, false,
-						array('class' => 'minimal')) !!} Wyświetl w stopce</label>
+					<label>{!! Form::checkbox('show_footer', null, $page->show_footer, array('class'
+						=> 'minimal')) !!} Wyświetl w stopce</label>
 				</div>
-
-
-
-
-
+				
+				<div class="checkbox">
+					<label>{!! Form::checkbox('show_page', null, $page->show_page, array('class'
+						=> 'minimal')) !!} Ukryj wpis</label>
+				</div>
+				
+				
+				<div class="form-group">
+                  <label>Kategoria</label>
+                  <select class="form-control">
+                    <option>option 1</option>
+                    <option>option 2</option>
+                    <option>option 3</option>
+                    <option>option 4</option>
+                    <option>option 5</option>
+                  </select>
+                </div>
 			</div>
 		</div>
 
-		<div class="box box-info collapsed-box">
-			<div class="box-header">
-				<h3 class="box-title">Ustawienia SEO</h3>
-				<div class="box-tools pull-right">
-					<button class="btn btn-box-tool" data-widget="collapse">
-						<i class="fa fa-plus"></i>
-					</button>
-				</div>
-			</div>
-			<div class="box-body">
-				<div class="form-group">{!! Form::label('seo') !!} {!!
-					Form::text('seo', null, array('placeholder' => 'przyjazny
-					link','class' => 'form-control')) !!}</div>
 
-				<div class="form-group">{!! Form::label('meta_title') !!} {!!
-					Form::text('meta_title', null, array('placeholder' => 'tytuł
-					strony','class' => 'form-control')) !!}</div>
-
-				<div class="form-group">{!! Form::label('meta_keywords') !!} {!!
-					Form::text('meta_keywords', null, array('placeholder' => 'słowa
-					kluczowe','class' => 'form-control')) !!}</div>
-
-				<div class="form-group">{!! Form::label('meta_description') !!} {!!
-					Form::textarea('meta_description', null, array('placeholder' =>
-					'meta opis','class' => 'form-control')) !!}</div>
-
-			</div>
-		</div>
-		{!! Form::close() !!} @endsection
+	</div>
+</div>
+{!! Form::close() !!} @endsection

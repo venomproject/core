@@ -30,13 +30,7 @@ tinymce.init({
     'advlist autolink lists link image imagetools charmap  hr ',
     'wordcount code table paste textcolor colorpicker filemanager'
   ], 
-/*
-  plugins: [
-            "advlist autolink link image lists charmap print preview hr anchor pagebreak",
-            "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",
-            "table contextmenu directionality emoticons paste textcolor filemanager code"
-      ],
-  */
+
   toolbar1: 'undo redo  | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent ',
   image_advtab: true,
   content_css: [

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\Controller;
 use App\Pages;
 use Illuminate\Http\Request;
+use DB;
+use Illuminate\Support\Str;
 
 class PagesController extends Controller {
 	public function __construct() {
@@ -25,10 +27,14 @@ class PagesController extends Controller {
 	public function index() {
 		
 		// return Pages::first();
-		$rows = Pages::orderBy ( 'id', 'desc' )->paginate ( 5 );
+		$rows = Pages::orderBy ( 'id', 'desc' )->paginate ( 10 );
+		
+		//$rows = DB::table('pages')->select('name', 'description','id','position')->get();
+		
 		
 		return view ( 'admin.pages.index', [ 
-				'pages' => $rows 
+				'pages' => $rows,
+				'title' => 'Lista'
 		] );
 	}
 	
@@ -71,19 +77,6 @@ class PagesController extends Controller {
 		Pages::create ( $input );
 		return redirect ( 'admin/pages' )->with ( 'status', 'Wpis został dodany pomyślnie' );
 		
-		/*
-		 * $student = new Student();
-		 * $student->imie = $request->imie;
-		 * $student->nazwisko = $request->nazwisko;
-		 * $student->adres = $request->adres;
-		 * $student->kod_pocztowy = $request->kod_pocztowy;
-		 * $student->miejscowosc = $request->miejscowosc;
-		 * $student->telefon = $request->telefon;
-		 * $student->save();
-		 *
-		 * return Redirect::to('new/request')->withInput();
-		 */
-		//
 	}
 	
 	/**
@@ -106,7 +99,7 @@ class PagesController extends Controller {
 	 */
 	public function edit($id) {
 		$page = Pages::find ( $id );
-		return view ( 'admin.pages.edit' )->with ( 'page', $page );
+		return view ( 'admin.pages.edit' )->with (['urlPath' => 'pages','title' => 'Edycja', 'page' => $page] );
 	}
 	
 	/**
@@ -137,36 +130,28 @@ class PagesController extends Controller {
 		
 		;
 		
-		// $input['create_date'] = \Carbon\Carbon::createFromFormat('d-m-Y', $input['create_date'])->format('Y-m-d');
-		// $input['public_date'] = \Carbon\Carbon::createFromFormat('d-m-Y', $input['public_date'])->format('Y-m-d');
-		
-		// $request->input('confirm', false);
-		
 		$page = Pages::find ( $id );
 		$page->name = $request->input ( 'name' );
 		$page->description = $request->input ( 'description' );
-		$page->create_date = \Carbon\Carbon::createFromFormat ( 'd-m-Y', $request ['create_date'] )->format ( 'Y-m-d' );
-		$page->public_date = \Carbon\Carbon::createFromFormat ( 'd-m-Y', $request ['public_date'] )->format ( 'Y-m-d' );
+		$page->create_date = \Carbon\Carbon::createFromFormat('d-m-Y', $request ['create_date'])->format('Y-m-d');
+		$page->public_date = \Carbon\Carbon::createFromFormat('d-m-Y', $request ['public_date'])->format('Y-m-d');
 		$page->show_footer = $request->has ( 'show_footer' );
 		$page->show_menu = $request->has ( 'show_menu' );
+		$page->show_page = $request->has ( 'show_page' );
 		
-		$page->seo = $request->input ( 'seo' );
+		
+		
+		$page->seo = Str::slug($request->input ( 'name' )); 
 		$page->meta_keywords = $request->input ( 'meta_keywords' );
 		$page->meta_description = $request->input ( 'meta_description' );
 		$page->meta_title = $request->input ( 'meta_title' );
 		
 		$page->save ();
 		
-		echo $id;
-		
-		dd ( $page );
-		diE ();
 		
 		// Pages::create ( $request->all () );
-		return redirect ( 'admin/pages' )->with ( 'status', 'Wpis został dodany pomyślnie' );
+		return redirect ( 'admin/pages' )->with ( 'status', 'Wpis został pomyślnie zmodyfikowany' );
 		
-		echo 'aastaa';
-		die ();
 	}
 	
 	/**

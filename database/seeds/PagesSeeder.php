@@ -8,13 +8,16 @@ class PagesSeeder extends Seeder {
 	 * @return void
 	 */
 	public function run() {
-		$faker = Faker::create ();
+		$faker = Faker::create ('pl_PL');
 		
-		foreach ( range ( 1, 100 ) as $index ) {
+		
+		foreach ( range ( 1, 10 ) as $index ) {
 			DB::table ( 'pages' )->insert ( [ 
-					'name' => $faker->sentence ( 5 ),
-					'short_description' => str_random ( 10 ) . '@gmail.com',
-					'description' => '123' . str_random ( 10 ) 
+					'name' => $faker->name,
+					'short_description' => $faker->realText(rand(20,20)),
+					'description' => $faker->realText(rand(20,20)),
+					//'public_date' => date($format = 'd-m-Y', $max = 'now'),
+					//'create_date' => date($format = 'd-m-Y', 'now'),
 			] );
 		}
 	}
