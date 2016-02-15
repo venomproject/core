@@ -28,7 +28,8 @@
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
 });
-
+ 
+Route::post('apply/upload/{id}', 'FileController@upload');
 
 	
 

@@ -23,7 +23,8 @@
 <script src="{{ asset('../public/tinymce/tinymce.min.js') }}" type="text/javascript"></script>
 <script>
 tinymce.init({
-  selector: 'textarea',height: 300, theme: 'modern',
+  selector: 'textarea.tinymce',height: 300, theme: 'modern',
+
   language: 'pl',
   language_url: '{{ asset("../public/tinymce/langs/pl.js") }}',
    plugins: [
@@ -39,7 +40,26 @@ tinymce.init({
 
   external_filemanager_path:"/public/filemanager/",
   filemanager_title:"Wgrane pliki" ,
+  filemanager_access_key:"AGVXNg6ZJVDeTQtkQtn7yB9ExDaZbLR2yxvBrhCF2c4wXfUNqywBTmdyBUg5Jg3q" ,
   external_plugins: { "filemanager" : "{{ asset('../public/filemanager/plugin.min.js') }}"}
  
 });
+
+
+
+
+
+          $("#ck").click(function(e){
+              e.preventDefault();
+              var dataString = 'jest'; 
+              $.ajax({
+                  type: "POST",
+                  url : "/apply/upload/33",
+                  data : dataString,
+                  success : function(data){
+                      console.log(data);
+                  }
+              },"json");
+
+      });//end of document ready function
 </script>

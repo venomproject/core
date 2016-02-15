@@ -2,8 +2,8 @@
 
 @section('content') 
 
-{!! Form::model($page,array('route' => array('admin.pages.update', $page->id), 'method' => 'PUT')) !!}
-<div class="row">
+{!! Form::model($page,array('route' => array('admin.pages.update', $page->id), 'method' => 'PUT','files'=>true)) !!}
+<div class="row"> 	
 	<div class="col-md-9">
 
 		<div class="nav-tabs-custom">
@@ -21,11 +21,53 @@
 
 						<div class="form-group">{!! Form::label('description') !!} {!!
 							Form::textarea('description', null, array('class' =>
-							'form-control','placeholder' => 'Opis strony')) !!}</div>
+							'form-control tinymce','placeholder' => 'Opis strony')) !!}</div>
 					</div>
 				</div>
 
-				<div class="tab-pane" id="galleryTab">Galeria</div>
+				<div class="tab-pane" id="galleryTab">Galeria
+
+
+<div>
+
+
+
+
+<div id="ck">clisk test</div>
+
+tu
+
+
+
+
+
+tu
+
+
+
+
+
+
+
+  <div class="secure">Upload form</div>
+    <div class="control-group">
+      <div class="controls">
+      {!! Form::file('images[]', array('multiple'=>true)) !!}
+	<p class="e	rrors">{!!$errors->first('images')!!}</p>
+     </div>
+</div>
+</div>
+
+				
+					@foreach($file as $photo)
+										
+								<img src="{{ asset('/'.$photo) }}" alt="Avatar" />
+										
+					@endforeach
+					
+				 
+				
+				</div>
 
 				<div class="tab-pane" id="seoTab">
 

@@ -2,6 +2,10 @@
 <div class="row">
 	<div class="col-xs-12">
 
+	
+	<div class="text-content">
+  <div class="span7 offset1">
+	
 		<div class="box">
 			<div class="box-header">
 				<h3 class="box-title">Lista</h3>
