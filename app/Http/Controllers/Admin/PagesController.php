@@ -95,6 +95,8 @@ class PagesController extends Controller {
 	 * @return Response
 	 */
 	public function edit($id) {
+		
+		
 		if (! File::isDirectory ( 'uploads/' . $id )) {
 			File::makeDirectory ( 'uploads/' . $id );
 			File::makeDirectory ( 'uploads/' . $id . '/thumb' );
@@ -103,6 +105,11 @@ class PagesController extends Controller {
 		$file = File::files ( 'uploads/' . $id . '/thumb' );
 		
 		$page = Pages::findOrFail ( $id );
+		
+		
+		 
+
+		dd(ltrim($page->meta_description));
 		
 		$parentCategory = Pages::where ( 'id', '!=', $id )->lists ( 'name', 'id' )->prepend ( '-- brak --', 0 );
 		
