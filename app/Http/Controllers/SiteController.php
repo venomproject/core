@@ -1,19 +1,34 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Pages;
 
 class SiteController extends Controller {
-	public function show($id, $seo) {
-		$page = Pages::with ( 'files' )->findOrFail ( $id );
-		
-		return view ( 'frontend.pages' )->with ( [ 
-				'page' => $page 
+	
+	public $activePages;
+	public $navigation;
+	public function __construct()
+    {
+		$this->activePages = Pages::with ( 'files' )->where('show_page',1)->where('public_date' ,'<=', date('Y-m-d'));
+    }
+	
+	public function index() {
+		return view ( 'home' )->with ( [ 
+				'page' => $this->activePages->first() 
 		] );
 	}
-	public function index() {
-		return view ( 'home' );
+	
+	public function show($id, $seo) {
+		return view ( 'frontend.pages' )->with ( [ 
+				'page' => $this->activePages->findOrFail ( $id )
+		] );
+	}
+	
+	public function prev($id, $seo) {
+		$prev = Pages::with ( 'files' )->findOrFail ( $id );
+		return view ( 'frontend.pages' )->with ( [ 
+				'page' => $prev
+		] );
 	}
 }

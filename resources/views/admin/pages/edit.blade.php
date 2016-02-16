@@ -149,8 +149,8 @@ $page->id), 'method' => 'PUT','files'=>true)) !!}
 				<h3 class="profile-username text-center">{{ $page->name }}</h3>
 
 				<p class="text-muted text-center">
-					<a href="{{URL::to('/')}}/{{ $page->id}}/{{ $page->seo}}"
-						target="_blank">{{URL::to('/')}}/{{ $page->id}}/{{ $page->seo}}</a>
+					<a href="{{URL::to('/')}}/prev/{{ $page->id}}/{{ $page->seo}}"
+						target="_blank">Podgląd wpisu</a>
 				</p>
 
 				<ul class="list-group list-group-unbordered">
@@ -216,7 +216,7 @@ $page->id), 'method' => 'PUT','files'=>true)) !!}
 
 				<div class="checkbox">
 					<label>{!! Form::checkbox('show_page', null, $page->show_page,
-						array('class' => 'minimal')) !!} Ukryj wpis</label>
+						array('class' => 'minimal')) !!} Wyświetl wpis</label>
 				</div>
 
 			</div>

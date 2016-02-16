@@ -106,11 +106,6 @@ class PagesController extends Controller {
 		
 		$page = Pages::findOrFail ( $id );
 		
-		
-		 
-
-		dd(ltrim($page->meta_description));
-		
 		$parentCategory = Pages::where ( 'id', '!=', $id )->lists ( 'name', 'id' )->prepend ( '-- brak --', 0 );
 		
 		return view ( 'admin.pages.edit' )->with ( [ 
@@ -187,7 +182,8 @@ class PagesController extends Controller {
 		$page->show_menu = $request->has ( 'show_menu' );
 		$page->show_page = $request->has ( 'show_page' );
 		
-		$page->pages_id = $request->input ( 'pages_id' );
+		
+		$page->pages_id = ($request->input ( 'pages_id' ) != 0 ) ? $request->input ( 'pages_id' ) : null;
 		$page->seo = Str::slug ( $request->input ( 'seo' ) );
 		$page->meta_keywords = $request->input ( 'meta_keywords' );
 		$page->meta_description = $request->input ( 'meta_description' );
