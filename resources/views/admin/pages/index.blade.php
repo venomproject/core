@@ -8,7 +8,11 @@
 	
 		<div class="box">
 			<div class="box-header">
+			<i class="fa fa-edit"></i>
 				<h3 class="box-title">Lista</h3>
+				<div class="box-tools col-sm-2">
+				<a href="/admin/pages/create" class="btn btn-block btn-success">Dodaj</a>
+				</div>
 			</div>
 			<div class="box-body">
 				<table id="example2" class="table table-bordered table-hover">

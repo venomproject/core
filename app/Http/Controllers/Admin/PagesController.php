@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Admin\Controller;
 use App\Pages;
+use App\Files;
 use Illuminate\Http\Request;
 use DB;
 use File;
@@ -141,6 +142,15 @@ class PagesController extends Controller {
 				$filename = $file->getClientOriginalName ();
 				$upload_success = $file->move ( $destinationPath, $filename );
 				
+				
+				
+				$photo = new Files();
+				$photo->name = $filename;
+				$photo->pages_id = $id;
+				if($file_count-1 == $uploadcount)
+				$photo->masterPhoto = 1;	
+				$photo->save();
+				
 				$img = \Image::make('uploads/'.$id.'/'.$filename);
 				$img->resize(320, 240);
 				$img->save('uploads/'.$id.'/thumb/'.$filename);
@@ -161,8 +171,8 @@ class PagesController extends Controller {
 		
 		$this->validate ( $request, [ 
 				'name' => 'required',
-				'create_date' => 'required',
-				'public_date' => 'required',
+				'create_date' => 'required|date_format:d-m-Y',
+				'public_date' => 'required|date_format:d-m-Y',
 				'description' => 'required' 
 		], $messages );
 		

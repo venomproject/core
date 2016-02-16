@@ -33,10 +33,11 @@ Route::post('apply/upload/{id}', 'FileController@upload');
 
 	
 
-	Route::get('/', function () {
-		return View::make('home');
-	});
-		
+	
+
+	
+	
+	
 	
 		Route::group(['middleware' => ['web','auth'], 'prefix' => '/admin', 'namespace' => 'Admin'], function () {
 	
@@ -50,3 +51,5 @@ Route::post('apply/upload/{id}', 'FileController@upload');
 			Route::resource('/pages', 'PagesController');
 
 		});
+		
+	Route::get('{id}/{seo}', 'SiteController@show');	

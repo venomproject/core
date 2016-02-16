@@ -8,9 +8,9 @@
 
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs">
-				<li class="active"><a href="#textTab" data-toggle="tab">Treść</a></li>
-				<li><a href="#galleryTab" data-toggle="tab">Zdjęcia</a></li>
-				<li><a href="#seoTab" data-toggle="tab">Ustawienia SEO</a></li>
+				<li class="active"><a href="#textTab" data-toggle="tab"><i class="fa fa-edit"></i> Treść</a></li>
+				<li><a href="#galleryTab" data-toggle="tab"><i class="fa fa-photo"></i>  Zdjęcia</a></li>
+				<li><a href="#seoTab" data-toggle="tab"><i class="fa fa-line-chart"></i> Ustawienia SEO</a></li>
 			</ul>
 			<div class="tab-content">
 				<div class="active tab-pane" id="textTab">
@@ -35,18 +35,6 @@
 
 <div id="ck">clisk test</div>
 
-tu
-
-
-
-
-
-tu
-
-
-
-
-
 
 
   <div class="secure">Upload form</div>
@@ -58,10 +46,80 @@ tu
 </div>
 </div>
 
+<hr/>
 				
 					@foreach($file as $photo)
-										
-								<img src="{{ asset('/'.$photo) }}" alt="Avatar" />
+
+<div class="col-md-3">
+          <div class="box box-default collapsed-box">
+            <div class="box-header with-border">
+              <div class="box-title"><img src="{{ asset('/'.$photo) }}" alt="Avatar" width="100%"/></div>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                </button>
+              </div>
+              
+            </div>
+            
+            <div class="box-body">
+				
+				<div class="form-group">{!!
+							Form::text('seo', null, array('class' => 'form-control',
+							'placeholder' => 'Nazwa')) !!}</div>
+
+				
+				<div class="checkbox">
+					<label>{!! Form::checkbox('masterPhoto', null, null, array('class'
+						=> 'minimal')) !!} ustaw jako główne</label>
+				</div>
+				
+				
+				<hr/>
+				<a href="#" class="btn btn-block btn-danger btn-sm">usuń</a>
+				
+				
+            </div>
+            
+          </div>
+          
+        </div>										
+								
+<div class="col-md-3">
+          <div class="box box-default collapsed-box">
+            <div class="box-header with-border">
+              <div class="box-title"><img src="{{ asset('/'.$photo) }}" alt="Avatar" width="100%"/></div>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                </button>
+              </div>
+              
+            </div>
+            
+            <div class="box-body">
+				
+				<div class="form-group">{!!
+							Form::text('seo', null, array('class' => 'form-control',
+							'placeholder' => 'Nazwa')) !!}</div>
+
+				
+				<div class="checkbox">
+					<label>{!! Form::checkbox('masterPhoto', null, null, array('class'
+						=> 'minimal')) !!} ustaw jako główne</label>
+				</div>
+				
+				
+				<hr/>
+				<a href="#" class="btn btn-block btn-danger btn-sm">usuń</a>
+				
+				
+            </div>
+            
+          </div>
+          
+        </div>										
+								
 										
 					@endforeach
 					
@@ -105,7 +163,8 @@ tu
 
 				<h3 class="profile-username text-center">{{ $page->name }}</h3>
 
-				<p class="text-muted text-center">{{URL::to('/pages')}}/{{ $page->seo}}</p>
+				<p class="text-muted text-center">
+				<a href="{{URL::to('/')}}/{{ $page->id}}/{{ $page->seo}}" target="_blank">{{URL::to('/')}}/{{ $page->id}}/{{ $page->seo}}</a></p>
 
 				<ul class="list-group list-group-unbordered">
 					<li class="list-group-item"><b>Data utworzenia</b> <a

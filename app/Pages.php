@@ -20,4 +20,15 @@ class Pages extends Model {
 			'position',
 			'show_page' 
 	];
+	
+	
+	public function Files()
+    {
+        return $this->hasMany ('App\Files', 'pages_id');
+    }
+	
+	public function Languages()
+    {
+        return $this->HasOne('App\Languages', 'id');
+    }
 }
