@@ -61,5 +61,20 @@ tinymce.init({
                   }
               },"json");
 
-      });//end of document ready function
+      });
+
+          
+	$("#seo_generator").click(function(e){
+		e.preventDefault();
+		var names = $("#name").val(); 
+		var csrf = '{{ csrf_token() }}';
+		$.ajax({
+			type: "POST",
+			url : "/admin/seo_generator",
+			data : {name: names, '_token': csrf},
+			success : function(data){
+				$("#seo").val(data);
+			}
+		},"json");
+	});
 </script>

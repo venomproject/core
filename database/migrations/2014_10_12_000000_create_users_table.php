@@ -20,6 +20,8 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+        
+        	DB::insert('insert into users (id, name, email, password) values (?,?,?,?)', ['1', 'admin', 'admin@venomproject.com', bcrypt('topsecret')]);
     }
 
     /**

@@ -6,7 +6,6 @@ use App\Http\Controllers\Admin\Controller;
 use App\Pages;
 use App\Files;
 use Illuminate\Http\Request;
-use DB;
 use File;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Input;
@@ -23,6 +22,9 @@ class PagesController extends Controller {
 	public function usun($id) {
 		dd ( request () );
 	}
+	public function seo_generator() {
+		return Str::slug ( Input::get ( 'name' ) );
+	}
 	
 	/**
 	 * Display a listing of the resource.
@@ -30,11 +32,7 @@ class PagesController extends Controller {
 	 * @return Response
 	 */
 	public function index() {
-		
-		// return Pages::first();
 		$rows = Pages::orderBy ( 'id', 'desc' )->paginate ( 10 );
-		
-		// $rows = DB::table('pages')->select('name', 'description','id','position')->get();
 		
 		return view ( 'admin.pages.index', [ 
 				'pages' => $rows,
@@ -49,7 +47,6 @@ class PagesController extends Controller {
 	 */
 	public function create() {
 		return view ( 'admin.pages.create' );
-		//
 	}
 	
 	/**
@@ -65,12 +62,11 @@ class PagesController extends Controller {
 				'between' => 'The :attribute must be between :min - :max.',
 				'in' => 'The :attribute must be one of the following types: :values',
 				'name.required' => 'nazwa jeest kiepska!' 
-		]; // indywidualne tlumaczenie
-		   
-		// tlumczenia globalne / resorces/lang/en/validation.php
+		];
 		
 		$this->validate ( $request, [ 
 				'name' => 'required',
+				'seo' => 'required',
 				'create_date' => 'required',
 				'description' => 'required' 
 		], $messages );
@@ -89,9 +85,7 @@ class PagesController extends Controller {
 	 * @return Response
 	 */
 	public function show($id) {
-		echo 'aa';
-		dd ();
-		//
+		abort ( 404 );
 	}
 	
 	/**
@@ -103,18 +97,21 @@ class PagesController extends Controller {
 	public function edit($id) {
 		if (! File::isDirectory ( 'uploads/' . $id )) {
 			File::makeDirectory ( 'uploads/' . $id );
-			File::makeDirectory ( 'uploads/'.$id.'/thumb' );
+			File::makeDirectory ( 'uploads/' . $id . '/thumb' );
 		}
 		
-		$file = File::files ( 'uploads/' . $id.'/thumb' );
+		$file = File::files ( 'uploads/' . $id . '/thumb' );
 		
-		$page = Pages::find ( $id );
+		$page = Pages::findOrFail ( $id );
+		
+		$parentCategory = Pages::where ( 'id', '!=', $id )->lists ( 'name', 'id' )->prepend ( '-- brak --', 0 );
 		
 		return view ( 'admin.pages.edit' )->with ( [ 
 				'page' => $page,
 				'urlPath' => 'pages',
 				'title' => 'Edycja',
-				'file' => $file 
+				'file' => $file,
+				'parentCategory' => $parentCategory 
 		] );
 	}
 	
@@ -138,23 +135,21 @@ class PagesController extends Controller {
 					'file' => $file 
 			), $rules );
 			if ($validator->passes ()) {
-				$destinationPath = 'uploads/'.$id;
+				$destinationPath = 'uploads/' . $id;
 				$filename = $file->getClientOriginalName ();
 				$upload_success = $file->move ( $destinationPath, $filename );
 				
-				
-				
-				$photo = new Files();
+				$photo = new Files ();
 				$photo->name = $filename;
 				$photo->pages_id = $id;
-				if($file_count-1 == $uploadcount)
-				$photo->masterPhoto = 1;	
-				$photo->save();
+				if ($file_count - 1 == $uploadcount)
+					$photo->masterPhoto = 1;
+				$photo->save ();
 				
-				$img = \Image::make('uploads/'.$id.'/'.$filename);
-				$img->resize(320, 240);
-				$img->save('uploads/'.$id.'/thumb/'.$filename);
-
+				$img = \Image::make ( 'uploads/' . $id . '/' . $filename );
+				$img->resize ( 320, 240 );
+				$img->save ( 'uploads/' . $id . '/thumb/' . $filename );
+				
 				$uploadcount ++;
 			}
 		}
@@ -165,12 +160,11 @@ class PagesController extends Controller {
 				'between' => 'The :attribute must be between :min - :max.',
 				'in' => 'The :attribute must be one of the following types: :values',
 				'name.required' => 'nazwa jeest kiepska!' 
-		]; // indywidualne tlumaczenie
-		   
-		// tlumczenia globalne / resorces/lang/en/validation.php
+		];
 		
 		$this->validate ( $request, [ 
 				'name' => 'required',
+				'seo' => 'required',
 				'create_date' => 'required|date_format:d-m-Y',
 				'public_date' => 'required|date_format:d-m-Y',
 				'description' => 'required' 
@@ -186,14 +180,13 @@ class PagesController extends Controller {
 		$page->show_menu = $request->has ( 'show_menu' );
 		$page->show_page = $request->has ( 'show_page' );
 		
-		$page->seo = Str::slug ( $request->input ( 'name' ) );
+		$page->pages_id = $request->input ( 'pages_id' );
+		$page->seo = Str::slug ( $request->input ( 'seo' ) );
 		$page->meta_keywords = $request->input ( 'meta_keywords' );
 		$page->meta_description = $request->input ( 'meta_description' );
 		$page->meta_title = $request->input ( 'meta_title' );
 		
 		$page->save ();
-		
-		// Pages::create ( $request->all () );
 		
 		return redirect ( 'admin/pages' )->with ( 'status', 'Wpis został pomyślnie zmodyfikowany' );
 	}

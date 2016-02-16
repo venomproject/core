@@ -1,138 +1,123 @@
-@extends('admin.template')
-
-@section('content') 
-
-{!! Form::model($page,array('route' => array('admin.pages.update', $page->id), 'method' => 'PUT','files'=>true)) !!}
-<div class="row"> 	
+@extends('admin.template') @section('content') {!!
+Form::model($page,array('route' => array('admin.pages.update',
+$page->id), 'method' => 'PUT','files'=>true)) !!}
+<div class="row">
 	<div class="col-md-9">
 
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs">
-				<li class="active"><a href="#textTab" data-toggle="tab"><i class="fa fa-edit"></i> Treść</a></li>
-				<li><a href="#galleryTab" data-toggle="tab"><i class="fa fa-photo"></i>  Zdjęcia</a></li>
-				<li><a href="#seoTab" data-toggle="tab"><i class="fa fa-line-chart"></i> Ustawienia SEO</a></li>
+				<li class="active"><a href="#textTab" data-toggle="tab"><i
+						class="fa fa-edit"></i> Treść</a></li>
+				<li><a href="#galleryTab" data-toggle="tab"><i class="fa fa-photo"></i>
+						Zdjęcia</a></li>
+				<li><a href="#seoTab" data-toggle="tab"><i class="fa fa-line-chart"></i>
+						Ustawienia SEO</a></li>
 			</ul>
 			<div class="tab-content">
 				<div class="active tab-pane" id="textTab">
 					<div class="box-body">
+
 						<div class="form-group">{!! Form::label('name') !!} {!!
 							Form::text('name', null, array( 'class' =>
 							'form-control','placeholder' => 'Nazwa strony')) !!}</div>
-
 						<div class="form-group">{!! Form::label('description') !!} {!!
 							Form::textarea('description', null, array('class' =>
 							'form-control tinymce','placeholder' => 'Opis strony')) !!}</div>
 					</div>
 				</div>
 
-				<div class="tab-pane" id="galleryTab">Galeria
+				<div class="tab-pane" id="galleryTab">
+					Galeria
 
 
-<div>
-
-
-
-
-<div id="ck">clisk test</div>
+					<div>
 
 
 
-  <div class="secure">Upload form</div>
-    <div class="control-group">
-      <div class="controls">
-      {!! Form::file('images[]', array('multiple'=>true)) !!}
-	<p class="e	rrors">{!!$errors->first('images')!!}</p>
-     </div>
-</div>
-</div>
 
-<hr/>
-				
+						<div id="ck">clisk test</div>
+
+
+
+						<div class="secure">Upload form</div>
+						<div class="control-group">
+							<div class="controls">
+								{!! Form::file('images[]', array('multiple'=>true)) !!}
+								<p class="e	rrors">{!!$errors->first('images')!!}</p>
+							</div>
+						</div>
+					</div>
+
+					<hr />
+
 					@foreach($file as $photo)
 
-<div class="col-md-3">
-          <div class="box box-default collapsed-box">
-            <div class="box-header with-border">
-              <div class="box-title"><img src="{{ asset('/'.$photo) }}" alt="Avatar" width="100%"/></div>
+					<div class="col-md-3">
+						<div class="box box-default collapsed-box">
+							<div class="box-header with-border">
+								<div class="box-title">
+									<img src="{{ asset('/'.$photo) }}" alt="{{ $photo }}"
+										width="100%" />
+								</div>
 
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
-                </button>
-              </div>
-              
-            </div>
-            
-            <div class="box-body">
-				
-				<div class="form-group">{!!
-							Form::text('seo', null, array('class' => 'form-control',
-							'placeholder' => 'Nazwa')) !!}</div>
+								<div class="box-tools pull-right">
+									<button type="button" class="btn btn-box-tool"
+										data-widget="collapse">
+										<i class="fa fa-plus"></i>
+									</button>
+								</div>
 
-				
-				<div class="checkbox">
-					<label>{!! Form::checkbox('masterPhoto', null, null, array('class'
-						=> 'minimal')) !!} ustaw jako główne</label>
-				</div>
-				
-				
-				<hr/>
-				<a href="#" class="btn btn-block btn-danger btn-sm">usuń</a>
-				
-				
-            </div>
-            
-          </div>
-          
-        </div>										
-								
-<div class="col-md-3">
-          <div class="box box-default collapsed-box">
-            <div class="box-header with-border">
-              <div class="box-title"><img src="{{ asset('/'.$photo) }}" alt="Avatar" width="100%"/></div>
+							</div>
 
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
-                </button>
-              </div>
-              
-            </div>
-            
-            <div class="box-body">
-				
-				<div class="form-group">{!!
-							Form::text('seo', null, array('class' => 'form-control',
-							'placeholder' => 'Nazwa')) !!}</div>
+							<div class="box-body">
 
-				
-				<div class="checkbox">
-					<label>{!! Form::checkbox('masterPhoto', null, null, array('class'
-						=> 'minimal')) !!} ustaw jako główne</label>
-				</div>
-				
-				
-				<hr/>
-				<a href="#" class="btn btn-block btn-danger btn-sm">usuń</a>
-				
-				
-            </div>
-            
-          </div>
-          
-        </div>										
-								
-										
+								<div class="form-group">{!! Form::text('filename', null,
+									array('class' => 'form-control', 'placeholder' => 'Nazwa')) !!}</div>
+
+
+								<div class="checkbox">
+									<label>{!! Form::checkbox('masterPhoto', null, null,
+										array('class' => 'minimal')) !!} ustaw jako główne</label>
+								</div>
+
+
+								<hr />
+								<a href="#" class="btn btn-block btn-danger btn-sm">usuń</a>
+
+
+							</div>
+
+						</div>
+
+					</div>
+
+
 					@endforeach
-					
-				 
-				
+
+
+
 				</div>
 
 				<div class="tab-pane" id="seoTab">
 
 					<div class="box-body">
-						<div class="form-group">{!! Form::label('seo') !!} {!!
-							Form::text('seo', null, array('class' => 'form-control',
-							'placeholder' => 'przyjazny link')) !!}</div>
+						<div class="form-group">
+
+
+							<div class="form-group">
+								{!! Form::label('seo') !!}
+
+								<div class="input-group">
+									{!! Form::text('seo', $page->seo, array('class' => 'form-control' , 
+									'placeholder' => 'przyjazny link')) !!} 
+									<span class="input-group-addon"><i class="fa fa-refresh" style="cursor: pointer;" id="seo_generator"></i></span>
+								</div>
+
+							</div>
+
+
+
+						</div>
 
 						<div class="form-group">{!! Form::label('meta_title') !!} {!!
 							Form::text('meta_title', null, array('class' =>
@@ -164,7 +149,9 @@
 				<h3 class="profile-username text-center">{{ $page->name }}</h3>
 
 				<p class="text-muted text-center">
-				<a href="{{URL::to('/')}}/{{ $page->id}}/{{ $page->seo}}" target="_blank">{{URL::to('/')}}/{{ $page->id}}/{{ $page->seo}}</a></p>
+					<a href="{{URL::to('/')}}/{{ $page->id}}/{{ $page->seo}}"
+						target="_blank">{{URL::to('/')}}/{{ $page->id}}/{{ $page->seo}}</a>
+				</p>
 
 				<ul class="list-group list-group-unbordered">
 					<li class="list-group-item"><b>Data utworzenia</b> <a
@@ -185,6 +172,12 @@
 				<h3 class="box-title">Opcje</h3>
 			</div>
 			<div class="box-body">
+
+				<div class="form-group">
+					<label>Kategoria nadrzędna</label> {!! Form::select('pages_id',
+					$parentCategory, isset($page->pages_id) ? $page->pages_id : 0,
+					array('class' => 'form-control')) !!}
+				</div>
 
 				<div class="form-group">
 					{!! Form::label('create_date', 'Data wpisu') !!}
@@ -212,31 +205,20 @@
 				</div>
 
 				<div class="checkbox">
-					<label>{!! Form::checkbox('show_menu', null, $page->show_menu, array('class'
-						=> 'minimal')) !!} Wyświetl w menu</label>
+					<label>{!! Form::checkbox('show_menu', null, $page->show_menu,
+						array('class' => 'minimal')) !!} Wyświetl w menu</label>
 				</div>
 
 				<div class="checkbox">
-					<label>{!! Form::checkbox('show_footer', null, $page->show_footer, array('class'
-						=> 'minimal')) !!} Wyświetl w stopce</label>
+					<label>{!! Form::checkbox('show_footer', null, $page->show_footer,
+						array('class' => 'minimal')) !!} Wyświetl w stopce</label>
 				</div>
-				
+
 				<div class="checkbox">
-					<label>{!! Form::checkbox('show_page', null, $page->show_page, array('class'
-						=> 'minimal')) !!} Ukryj wpis</label>
+					<label>{!! Form::checkbox('show_page', null, $page->show_page,
+						array('class' => 'minimal')) !!} Ukryj wpis</label>
 				</div>
-				
-				
-				<div class="form-group">
-                  <label>Kategoria</label>
-                  <select class="form-control">
-                    <option>option 1</option>
-                    <option>option 2</option>
-                    <option>option 3</option>
-                    <option>option 4</option>
-                    <option>option 5</option>
-                  </select>
-                </div>
+
 			</div>
 		</div>
 
