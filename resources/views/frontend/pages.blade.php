@@ -9,7 +9,13 @@
 
 
 	@foreach($page->files as $photo)
+	
+	<a title="{{$photo->name}}" data-fancybox-group="gallery" href="{{ asset('/uploads/'.$page->id) }}/{{$photo->name}}" class="fancybox">
+	
+	
+	
 		<img src="{{ asset('/uploads/'.$page->id) }}/thumb/{{$photo->name}}" alt="{{$photo->name}}" />
+		</a>
 	@endforeach
 
 @endsection
