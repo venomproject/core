@@ -24,7 +24,30 @@
 <script>
 
 $(document).ready(function() {
-        $('.fancybox').fancybox();
+$(".fancybox").fancybox({
+				
+				closeClick : true,
+
+				openEffect : 'none',
+
+				helpers : {
+					title : {
+						type : 'inside'
+					},
+					overlay : {
+						css : {
+							'background' : 'rgba(0,0,0,0.85)'
+						}
+					}
+				}
+			});
+	
+	
+        
     });
 
+	
+	
+	
+	
 </script>

@@ -30,7 +30,7 @@ tinymce.init({
    plugins: [
     'advlist autolink lists link image imagetools charmap  hr ',
     'wordcount code table paste textcolor colorpicker filemanager'
-  ], 
+  ],
 
   toolbar1: 'undo redo  | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent ',
   image_advtab: true,
@@ -42,7 +42,7 @@ tinymce.init({
   filemanager_title:"Wgrane pliki" ,
   filemanager_access_key:"AGVXNg6ZJVDeTQtkQtn7yB9ExDaZbLR2yxvBrhCF2c4wXfUNqywBTmdyBUg5Jg3q" ,
   external_plugins: { "filemanager" : "{{ asset('../public/filemanager/plugin.min.js') }}"}
- 
+
 });
 
 
@@ -51,7 +51,7 @@ tinymce.init({
 
           $("#ck").click(function(e){
               e.preventDefault();
-              var dataString = 'jest'; 
+              var dataString = 'jest';
               $.ajax({
                   type: "POST",
                   url : "/apply/upload/33",
@@ -63,10 +63,27 @@ tinymce.init({
 
       });
 
-          
+
+
+    $("#galleryTab .thumbPrev .del").click(function(e){
+        if($(this).hasClass('btn-danger')){
+            var delID = $(this).attr('delID');
+            $(this).removeClass('btn-danger').addClass('btn-success').text('Przywróć').append('<input type="checkbox" name="remove['+delID+']" class="minimal" checked>');
+
+
+
+
+
+        }else{
+            $(this).removeClass('btn-success').addClass('btn-danger').text('Usuń');
+        }
+    });
+
+
+
 	$("#seo_generator").click(function(e){
 		e.preventDefault();
-		var names = $("#name").val(); 
+		var names = $("#name").val();
 		var csrf = '{{ csrf_token() }}';
 		$.ajax({
 			type: "POST",
