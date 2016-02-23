@@ -19,7 +19,7 @@
 									<th>Nazwa</th>
 									<th>Opis</th>
 									<th>Pozycja</th>
-									<th width="108px;"></th>
+									<th width="125px;"></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -28,7 +28,7 @@
 									<td class="sorting_1">{{ $page->id }}</td>
 									<td>{{ $page->name }}</td>
 									<td>{{ $page->description }}</td>
-									<td>{{ $page->position }}</td>
+									<td><i class="glyphicon glyphicon-sort" style="cursor: pointer;"></i> </td>
 									<td>
 										<div class="btn-group">
 											{!! link_to('admin/pages/'.$page->id.'/edit', 'Edycja',  array('class' => 'btn btn-info')) !!}
@@ -49,7 +49,6 @@
 											<li>
 												<a href="{{URL::to('/')}}/prev/{{ $page->id}}/{{ $page->seo}}" target="_blank"><i class="fa fa-eye"></i>Podgląd</a></li>
 												@if ($page->show_page)
-
 												<li><a href="#"><i class="fa  fa-square-o "></i>Wyłącz</a></li>
 												@else
 												<li><a href="#"><i class="fa fa-check-square-o"></i>Włącz</a></li>

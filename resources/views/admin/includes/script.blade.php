@@ -69,11 +69,6 @@ tinymce.init({
         if($(this).hasClass('btn-danger')){
             var delID = $(this).attr('delID');
             $(this).removeClass('btn-danger').addClass('btn-success').text('Przywróć').append('<input type="checkbox" name="remove['+delID+']" class="minimal" checked>');
-
-
-
-
-
         }else{
             $(this).removeClass('btn-success').addClass('btn-danger').text('Usuń');
         }
@@ -94,4 +89,32 @@ tinymce.init({
 			}
 		},"json");
 	});
-</script>
+
+
+
+
+var fixHelperModified = function(e, tr) {
+    var $originals = tr.children();
+    var $helper = tr.clone();
+    $helper.children().each(function(index)
+    {
+      $(this).width($originals.eq(index).width())
+    });
+    return $helper;
+};
+
+$("#example2 tbody").sortable({
+    helper: fixHelperModified,
+    placeholder: "ui-state-highlight",
+    handle: 'i.glyphicon-sort',
+}).disableSelection();
+
+
+
+</script><<style type="text/css" media="screen">
+    .ui-state-highlight{
+        background: #3c8dbc;
+    }
+
+
+</style>
