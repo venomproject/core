@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Database\Seeder;
+
 class DatabaseSeeder extends Seeder {
 	/**
 	 * Run the database seeds.
@@ -7,7 +8,7 @@ class DatabaseSeeder extends Seeder {
 	 * @return void
 	 */
 	public function run() {
-	//	$this->call ( PagesSeeder::class );
-	//	$this->command->info ( 'User table seeded!' );
+		$this->call(PagesSeeder::class);
+		$this->command->info('User table seeded!');
 	}
 }

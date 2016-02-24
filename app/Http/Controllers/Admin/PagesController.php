@@ -32,7 +32,7 @@ class PagesController extends Controller {
 	 * @return Response
 	 */
 	public function index() {
-		$rows = Pages::orderBy('id', 'desc')->paginate(10);
+		$rows = Pages::orderBy('position', 'desc')->paginate(10);
 
 		return view('admin.pages.index', [
 			'pages' => $rows,
@@ -207,5 +207,21 @@ class PagesController extends Controller {
 	public function destroy($id) {
 		Pages::destroy($id);
 		return redirect('admin/pages')->with('status', 'Wpis został pomyślnie usunięty');
+	}
+
+	public function changePosition(Request $request) {
+
+		$nrPage = $request->get('nrPage');
+
+		$perPage = ($nrPage == 1) ? 1 : 10 * $nrPage;
+
+		$id = $request->input('itemID');
+		$position = $perPage + $request->input('itemIndex') + 1;
+
+		$page = Pages::find($id);
+		$page->position = $position;
+		$page->save();
+
+		return 'success';
 	}
 }

@@ -107,6 +107,29 @@ $("#example2 tbody").sortable({
     helper: fixHelperModified,
     placeholder: "ui-state-highlight",
     handle: 'i.glyphicon-sort',
+    stop: function(){
+        $.map($(this).find('tr'), function(el){
+            var itemID = el.id;
+            var itemIndex = $(el).index();
+            var nrPage = {{ Request::has('page') == true ? Request::get('page') : 6}};
+             console.log(itemID, itemIndex);
+
+
+        var csrf = '{{ csrf_token() }}';
+
+            $.ajax({
+                url: '/admin/changePositionInTable',
+                type: 'POST',
+                dataType: 'json',
+                data: {itemID: itemID, itemIndex: itemIndex, '_token': csrf, 'nrPage' : nrPage},
+            });
+
+        });
+
+    },
+
+
+
 }).disableSelection();
 
 

@@ -10,6 +10,7 @@
 <link href="{{ asset('../public/lte-template/plugins/datepicker/datepicker3.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('../public/lte-template/plugins/daterangepicker/daterangepicker-bs3.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('../public/lte-template/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('../public/lte-template/dist/css/style.css') }}" rel="stylesheet" type="text/css" />
  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>

@@ -24,11 +24,11 @@
 							</thead>
 							<tbody>
 								@forelse ($pages as $page)
-								<tr role="row" class="even">
+								<tr role="row" class="even" id="{{ $page->id }}">
 									<td class="sorting_1">{{ $page->id }}</td>
 									<td>{{ $page->name }}</td>
 									<td>{{ $page->description }}</td>
-									<td><i class="glyphicon glyphicon-sort" style="cursor: pointer;"></i> </td>
+									<td><i class="glyphicon glyphicon-sort" style="cursor: pointer;"></i></td>
 									<td>
 										<div class="btn-group">
 											{!! link_to('admin/pages/'.$page->id.'/edit', 'Edycja',  array('class' => 'btn btn-info')) !!}
@@ -41,9 +41,10 @@
 											<li>
 												{!! link_to('admin/pages/'.$page->id.'/edit', 'Kopia',  array('class' => '')) !!}
 											</li>
+											<li role="separator" class="divider"></li>
 											<li>{!! Form::open(array('method' => 'DELETE', 'route' =>
 												array('admin.pages.destroy', $page->id))) !!}
-												{!! Form::button('<i class="fa  fa-trash"></i>Usuń', array('onclick' => 'return confirm("Czy jesteś pewny że chcesz usunąć ?");', 'type' => 'submit', 'class' => 'btn-link deleteBtn')) !!}
+												{!! Form::button('<i class="fa  fa-trash" style="margin-right: 10px;"></i>Usuń', array('onclick' => 'return confirm("Czy jesteś pewny że chcesz usunąć ?");', 'type' => 'submit', 'class' => 'btn-link deleteBtn')) !!}
 											{!! Form::close() !!}</li>
 											<li role="separator" class="divider"></li>
 											<li>
