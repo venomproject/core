@@ -24,4 +24,6 @@ Route::group(['middleware' => ['web', 'auth'], 'prefix' => '/admin', 'namespace'
 
 	Route::post('changePositionInTable', 'PagesController@changePosition');
 
+	View::composer('admin.template', '\App\Http\ViewComposers\AdminComposer');
+
 });
