@@ -6,3 +6,7 @@
 .deleteBtn:hover{
 	color: #f00;
 }
+
+.ui-sortable-handle{
+	cursor: pointer;
+}

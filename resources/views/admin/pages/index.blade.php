@@ -28,7 +28,7 @@
 									<td class="sorting_1">{{ $page->id }}</td>
 									<td>{{ $page->name }}</td>
 									<td>{{ $page->description }}</td>
-									<td><i class="glyphicon glyphicon-sort" style="cursor: pointer;"></i></td>
+									<td><i class="glyphicon glyphicon-sort" ></i></td>
 									<td>
 										<div class="btn-group">
 											{!! link_to('admin/pages/'.$page->id.'/edit', 'Edycja',  array('class' => 'btn btn-info')) !!}

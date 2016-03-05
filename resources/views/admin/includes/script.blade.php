@@ -49,26 +49,12 @@ tinymce.init({
 
 
 
-          $("#ck").click(function(e){
-              e.preventDefault();
-              var dataString = 'jest';
-              $.ajax({
-                  type: "POST",
-                  url : "/apply/upload/33",
-                  data : dataString,
-                  success : function(data){
-                      console.log(data);
-                  }
-              },"json");
-
-      });
-
 
 
     $("#galleryTab .thumbPrev .del").click(function(e){
         if($(this).hasClass('btn-danger')){
             var delID = $(this).attr('delID');
-            $(this).removeClass('btn-danger').addClass('btn-success').text('Przywróć').append('<input type="checkbox" name="remove['+delID+']" class="minimal" checked>');
+            $(this).removeClass('btn-danger').addClass('btn-success').text('Przywróć').append('<input type="checkbox" name="remove['+delID+']" class="hidden" checked>');
         }else{
             $(this).removeClass('btn-success').addClass('btn-danger').text('Usuń');
         }
@@ -78,7 +64,7 @@ tinymce.init({
 
 	$("#seo_generator").click(function(e){
 		e.preventDefault();
-		var names = $("#name").val();
+		var names = $("#pageName").val();
 		var csrf = '{{ csrf_token() }}';
 		$.ajax({
 			type: "POST",
@@ -108,36 +94,53 @@ $("#example2 tbody").sortable({
     placeholder: "ui-state-highlight",
     handle: 'i.glyphicon-sort',
     stop: function(){
+   console.log('stop');
+ },
+    update: function(){
         $.map($(this).find('tr'), function(el){
             var itemID = el.id;
             var itemIndex = $(el).index();
             var nrPage = {{ Request::has('page') == true ? Request::get('page') : 6}};
-             console.log(itemID, itemIndex);
-
-
-        var csrf = '{{ csrf_token() }}';
-
+            var csrf = '{{ csrf_token() }}';
             $.ajax({
                 url: '/admin/changePositionInTable',
                 type: 'POST',
                 dataType: 'json',
                 data: {itemID: itemID, itemIndex: itemIndex, '_token': csrf, 'nrPage' : nrPage},
             });
-
         });
 
-    },
 
+
+         console.log('update');
+    },
 
 
 }).disableSelection();
 
 
+$("#sortable").sortable({
+
+   placeholder: "ui-state-highlight",
+    handle: 'img',
+
+
+
+
+
+});
+
 
 </script><<style type="text/css" media="screen">
     .ui-state-highlight{
         background: #3c8dbc;
+
     }
 
+
+
+
+  #sortable div { overflow: hidden;
+}
 
 </style>

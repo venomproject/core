@@ -12,6 +12,7 @@ class AdminComposer {
 	public function __construct() {
 
 		$this->parentPages = Pages::whereNull('pages_id')->where('show_menu', 1)->orderBy('position', 'desc')->get();
+
 	}
 
 	public function compose(View $view) {

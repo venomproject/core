@@ -8,7 +8,7 @@ class DatabaseSeeder extends Seeder {
 	 * @return void
 	 */
 	public function run() {
-		$this->call(PagesSeeder::class);
+		//$this->call(PagesSeeder::class);
 		$this->command->info('User table seeded!');
 	}
 }

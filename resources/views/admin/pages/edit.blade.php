@@ -1,6 +1,28 @@
-@extends('admin.template') @section('content') {!!
-Form::model($page,array('route' => array('admin.pages.update', $page->id), 'method' => 'PUT','files'=>true)) !!}
+@extends('admin.template') @section('content')
 <div class="row">
+
+<div class="col-md-12">
+
+
+
+<div class="box box-default collapsed-box">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Lista podstron</h3>
+                  <div class="box-tools pull-right">
+                    <button data-widget="collapse" class="btn btn-box-tool"><i class="fa fa-plus"></i></button>
+                  </div><!-- /.box-tools -->
+                </div><!-- /.box-header -->
+                <div class="box-body" style="display: none;">
+                  The body of the box
+                </div><!-- /.box-body -->
+              </div>
+
+	</div>
+
+
+
+{!!
+Form::model($page,array('route' => array('admin.pages.update', $page->id), 'method' => 'PUT','files'=>true)) !!}
 	<div class="col-md-9">
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs">
@@ -14,27 +36,26 @@ Form::model($page,array('route' => array('admin.pages.update', $page->id), 'meth
 			<div class="tab-content">
 				<div class="active tab-pane" id="textTab">
 					<div class="box-body">
-						<div class="form-group">{!! Form::label('name') !!} {!!
-							Form::text('name', null, array( 'class' =>
+						<div class="form-group">{!! Form::label('Nazwa') !!} {!!
+							Form::text('name', null, array('id' => 'pageName',  'class' =>
 						'form-control','placeholder' => 'Nazwa strony')) !!}</div>
-						<div class="form-group">{!! Form::label('description') !!} {!!
+						<div class="form-group">{!! Form::label('Opis') !!} {!!
 							Form::textarea('description', null, array('class' =>
 						'form-control tinymce','placeholder' => 'Opis strony')) !!}</div>
 					</div>
 				</div>
 				<div class="tab-pane" id="galleryTab" style="overflow: hidden;">
-					Galeria
-					<div>
-						<div id="ck">clisk test</div>
-						<div class="secure">Upload form</div>
+
+
 						<div class="control-group">
 							<div class="controls">
 								{!! Form::file('images[]', array('multiple'=>true)) !!}
 								<p class="e	rrors">{!!$errors->first('images')!!}</p>
 							</div>
 						</div>
-					</div>
+
 					<hr />
+					<div  id="sortable">
 					@foreach($file as $photo)
 					<div class="col-md-3">
 						<div class="box {{ $photo->masterPhoto == 1 ? 'box-success' : 'box-default' }} collapsed-box thumbPrev">
@@ -50,7 +71,7 @@ Form::model($page,array('route' => array('admin.pages.update', $page->id), 'meth
 								</div>
 							</div>
 							<div class="box-body">
-								<div class="form-group">{!! Form::text('filename['.$photo->id.']', $photo->name,
+								<div class="form-group">{!! Form::text('filename['.$photo->id.']', $photo->file_name,
 								array('class' => 'form-control', 'placeholder' => 'Nazwa')) !!}</div>
 								<div class="checkbox">
 									<label>{!! Form::checkbox('masterPhoto['.$photo->id.']', null, $photo->masterPhoto,
@@ -66,7 +87,9 @@ Form::model($page,array('route' => array('admin.pages.update', $page->id), 'meth
 
 						</div>
 					</div>
+
 					@endforeach
+					</div>
 				</div>
 				<div class="tab-pane" id="seoTab">
 					<div class="box-body">
@@ -164,5 +187,6 @@ Form::model($page,array('route' => array('admin.pages.update', $page->id), 'meth
 			</div>
 		</div>
 	</div>
+{!! Form::close() !!}
 </div>
-{!! Form::close() !!} @endsection
+ @endsection

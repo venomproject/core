@@ -1,5 +1,4 @@
 <?php
-use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 
 class PagesSeeder extends Seeder {
