@@ -7,7 +7,7 @@
 				<i class="fa fa-edit"></i>
 				<h3 class="box-title">Lista podstron</h3>
 				<div class="box-tools col-sm-2">
-					<a href="/admin/pages/create/{{ $page->id }}" class="btn btn-block btn-success">Dodaj nową podstronę</a>
+					<a href="/admin/pages/create/{{ $page->id }}" class="btn btn-block btn-success">Dodaj podstronę</a>
 				</div>
 			</div>
 			@if (count($childs) > 0)

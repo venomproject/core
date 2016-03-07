@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Files;
 use App\Http\Controllers\Admin\Controller;
+use App\Http\Requests\PageRequest;
 use App\Pages;
 use File;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Str;
 use Image;
@@ -64,23 +64,11 @@ class PagesController extends Controller {
 	 * @param Request $request
 	 * @return Response
 	 */
-	public function store(Request $request) {
-		$messages = [
-			'same' => 'The :attribute and :other must match.',
-			'size' => 'The :attribute must be exactly :size.',
-			'between' => 'The :attribute must be between :min - :max.',
-			'in' => 'The :attribute must be one of the following types: :values',
-			'name.required' => 'nazwa jeest kiepska!',
-		];
-
-		$this->validate($request, [
-			'name' => 'required',
-			'seo' => 'required',
-			'create_date' => 'required',
-			'description' => 'required',
-		], $messages);
+	public function store(PageRequest $request) {
 
 		$input = $request->all();
+
+		dd($input);
 		$input['create_date'] = \Carbon\Carbon::createFromFormat('d-m-Y', $input['create_date'])->format('Y-m-d');
 		$input['public_date'] = \Carbon\Carbon::createFromFormat('d-m-Y', $input['public_date'])->format('Y-m-d');
 		Pages::create($input);
@@ -134,7 +122,7 @@ class PagesController extends Controller {
 	 * @param int $id
 	 * @return Response
 	 */
-	public function update(Request $request, $id) {
+	public function update(PageRequest $request, $id) {
 		$files = Input::file('images');
 
 		$file_count = count($files);
@@ -168,22 +156,6 @@ class PagesController extends Controller {
 				$uploadcount++;
 			}
 		}
-
-		$messages = [
-			'same' => 'The :attribute and :other must match.',
-			'size' => 'The :attribute must be exactly :size.',
-			'between' => 'The :attribute must be between :min - :max.',
-			'in' => 'The :attribute must be one of the following types: :values',
-			'name.required' => 'nazwa jeest kiepska!',
-		];
-
-		$this->validate($request, [
-			'name' => 'required',
-			'seo' => 'required',
-			'create_date' => 'required|date_format:d-m-Y',
-			'public_date' => 'required|date_format:d-m-Y',
-			'description' => 'required',
-		], $messages);
 
 		if ($request->input('filename') != null) {
 

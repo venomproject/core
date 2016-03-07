@@ -1,7 +1,6 @@
 @extends('admin.template') @section('content')
 <div class="row">
-	{!!
-	Form::model('test',array('route' => array('admin.pages.create'), 'method' => 'POST','files'=>true)) !!}
+	{!! Form::open(array('action' => 'Admin\PagesController@store', 'files' => true)) !!}
 	<div class="col-md-9">
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs">
