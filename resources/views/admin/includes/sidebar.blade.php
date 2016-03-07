@@ -37,7 +37,7 @@
  <ul class="treeview-menu">
                     @foreach ($parentPages as $link)
                     <li>
-                        <a href="{{URL::to('/')}}/{{ $link->id}}/{{ $link->seo}}"><i class="fa fa-circle-o"></i> {{$link->name}}</a>
+                        <a href="{{URL::to('/admin/pages/')}}/{{ $link->id}}/edit"><i class="fa fa-circle-o"></i> {{$link->name}}</a>
                     </li>
                     @endforeach
 

@@ -94,26 +94,24 @@ $("#example2 tbody").sortable({
     placeholder: "ui-state-highlight",
     handle: 'i.glyphicon-sort',
     stop: function(){
-   console.log('stop');
+
  },
     update: function(){
         $.map($(this).find('tr'), function(el){
             var itemID = el.id;
             var itemIndex = $(el).index();
-            var nrPage = {{ Request::has('page') == true ? Request::get('page') : 6}};
+            var nrPage = {{ Request::has('page') == true ? Request::get('page') : 1}};
             var csrf = '{{ csrf_token() }}';
             $.ajax({
                 url: '/admin/changePositionInTable',
                 type: 'POST',
                 dataType: 'json',
                 data: {itemID: itemID, itemIndex: itemIndex, '_token': csrf, 'nrPage' : nrPage},
+
             });
         });
-
-
-
-         console.log('update');
     },
+
 
 
 }).disableSelection();

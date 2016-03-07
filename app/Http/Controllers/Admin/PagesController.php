@@ -32,7 +32,7 @@ class PagesController extends Controller {
 	 * @return Response
 	 */
 	public function index() {
-		$rows = Pages::orderBy('position', 'asc')->paginate(10);
+		$rows = Pages::whereNull('pages_id')->orderBy('position', 'asc')->paginate(20);
 
 		return view('admin.pages.index', [
 			'pages' => $rows,
@@ -106,8 +106,11 @@ class PagesController extends Controller {
 
 		$parentCategory = Pages::where('id', '!=', $id)->lists('name', 'id')->prepend('-- brak --', 0);
 
+		$childs = Pages::where('pages_id', '=', $id)->orderBy('position', 'asc')->get();
+
 		return view('admin.pages.edit')->with([
 			'page' => $page,
+			'childs' => $childs,
 			'urlPath' => 'pages',
 			'title' => 'Edycja',
 			'file' => $file,
@@ -173,25 +176,27 @@ class PagesController extends Controller {
 			'description' => 'required',
 		], $messages);
 
-		foreach ($request->input('filename') as $key => $value) {
-			$rowFile = Files::find($key);
+		if ($request->input('filename') != null) {
 
-			if ($request->input('remove.' . $key)) {
-				File::delete('uploads/' . $id . '/' . $rowFile->name);
-				File::delete('uploads/' . $id . '/thumb/' . $rowFile->name);
-				Files::find($key)->delete();
+			foreach ($request->input('filename') as $key => $value) {
+				$rowFile = Files::find($key);
+
+				if ($request->input('remove.' . $key)) {
+					File::delete('uploads/' . $id . '/' . $rowFile->name);
+					File::delete('uploads/' . $id . '/thumb/' . $rowFile->name);
+					Files::find($key)->delete();
+				}
+
+				$rowFile->file_name = $value;
+
+				if ($request->input('masterPhoto.' . $key)) {
+					$rowFile->masterPhoto = 1;
+				}
+
+				$rowFile->save();
+
 			}
-
-			$rowFile->file_name = $value;
-
-			if ($request->input('masterPhoto.' . $key)) {
-				$rowFile->masterPhoto = 1;
-			}
-
-			$rowFile->save();
-
 		}
-
 		$page = Pages::find($id);
 
 		$page->name = $request->input('name');

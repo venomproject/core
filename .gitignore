@@ -6,7 +6,6 @@ Homestead.json
 composer.json
 composer.lock
 composer.phar
-/app/Http/routes.php
 /public/filemanager/source
 /public/filemanager/thumbs
 /public/uploads

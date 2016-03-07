@@ -1,6 +1,8 @@
 @extends('admin.template') @section('content')
 <div class="row">
 	<div class="col-xs-12">
+
+
 		<div class="text-content">
 			<div class="span7 offset1">
 				<div class="box">
