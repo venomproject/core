@@ -23,7 +23,6 @@ class PageRequest extends Request {
 
 		return [
 			'name' => 'required',
-			'seo' => 'required',
 			'create_date' => 'required|date_format:d-m-Y',
 			'public_date' => 'required|date_format:d-m-Y',
 		];

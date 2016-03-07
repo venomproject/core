@@ -67,10 +67,16 @@ class PagesController extends Controller {
 	public function store(PageRequest $request) {
 
 		$input = $request->all();
-
-		dd($input);
 		$input['create_date'] = \Carbon\Carbon::createFromFormat('d-m-Y', $input['create_date'])->format('Y-m-d');
 		$input['public_date'] = \Carbon\Carbon::createFromFormat('d-m-Y', $input['public_date'])->format('Y-m-d');
+		$input['show_footer'] = $request->has('show_footer');
+		$input['show_menu'] = $request->has('show_menu');
+		$input['show_page'] = $request->has('show_page');
+
+		if ($request->input('seo') == null) {
+			$input['seo'] = Str::slug($request->input('name'));
+		}
+
 		Pages::create($input);
 		return redirect('admin/pages')->with('status', 'Wpis został dodany pomyślnie');
 	}
@@ -118,7 +124,7 @@ class PagesController extends Controller {
 	/**
 	 * Update the specified resource in storage.
 	 *
-	 * @param Request $request
+	 * @param PageRequest $request
 	 * @param int $id
 	 * @return Response
 	 */
