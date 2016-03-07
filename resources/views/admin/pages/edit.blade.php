@@ -1,84 +1,77 @@
 @extends('admin.template') @section('content')
 <div class="row">
 
-
-
-
-@if (count($childs) > 0)
-<div class="col-md-12">
-<div class="box box-default collapsed-box">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Lista podstron</h3>
-                  <div class="box-tools pull-right">
-                    <button data-widget="collapse" class="btn btn-box-tool"><i class="fa fa-plus"></i></button>
-                  </div>
-                </div>
-                <div class="box-body" style="display: none;">
-
-                  <table id="example2" class="table table-bordered table-hover">
-							<thead>
-								<tr>
-									<th>ID</th>
-									<th>Nazwa</th>
-									<th>Opis</th>
-									<th>Pozycja</th>
-									<th width="125px;"></th>
-								</tr>
-							</thead>
-							<tbody>
-								@forelse ($childs as $page)
-								<tr role="row" class="even" id="{{ $page->id }}">
-									<td class="sorting_1">{{ $page->id }}</td>
-									<td>{{ $page->name }}</td>
-									<td>{{ strip_tags($page->description, '<h1><h2><h3><p><span><ol><ul><li>') }}</td>
-									<td><i class="glyphicon glyphicon-sort" ></i></td>
-									<td>
-										<div class="btn-group">
-											{!! link_to('admin/pages/'.$page->id.'/edit', 'Edycja',  array('class' => 'btn btn-info')) !!}
-											<button type="button" class="btn btn-info dropdown-toggle"
-											data-toggle="dropdown">
-											<span class="caret"></span> <span class="sr-only">Toggle
-										Dropdown</span>
-										</button>
-										<ul class="dropdown-menu" role="menu">
-											<li>
-												{!! link_to('admin/pages/'.$page->id.'/edit', 'Kopia',  array('class' => '')) !!}
-											</li>
-											<li role="separator" class="divider"></li>
-											<li>{!! Form::open(array('method' => 'DELETE', 'route' =>
-												array('admin.pages.destroy', $page->id))) !!}
-												{!! Form::button('<i class="fa  fa-trash" style="margin-right: 10px;"></i>Usuń', array('onclick' => 'return confirm("Czy jesteś pewny że chcesz usunąć ?");', 'type' => 'submit', 'class' => 'btn-link deleteBtn')) !!}
-											{!! Form::close() !!}</li>
-											<li role="separator" class="divider"></li>
-											<li>
-												<a href="{{URL::to('/')}}/prev/{{ $page->id}}/{{ $page->seo}}" target="_blank"><i class="fa fa-eye"></i>Podgląd</a></li>
-												@if ($page->show_page)
-												<li><a href="#"><i class="fa  fa-square-o "></i>Wyłącz</a></li>
-												@else
-												<li><a href="#"><i class="fa fa-check-square-o"></i>Włącz</a></li>
-												@endif
-											</ul>
-										</div>
-									</td>
-								</tr>
-								@empty
-								<tr>
-									<td colspan="5">brak rekordów</td>
-								</tr>
-								@endforelse
-							</tbody>
-						</table>
-
-
-                </div>
-              </div>
-
+	<div class="col-md-12">
+		<div class="box box-default ">
+			<div class="box-header with-border">
+				<i class="fa fa-edit"></i>
+				<h3 class="box-title">Lista podstron</h3>
+				<div class="box-tools col-sm-2">
+					<a href="/admin/pages/create/{{ $page->id }}" class="btn btn-block btn-success">Dodaj nową podstronę</a>
+				</div>
+			</div>
+			@if (count($childs) > 0)
+			<div class="box-body" >
+				<table id="example2" class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Nazwa</th>
+							<th>Opis</th>
+							<th>Pozycja</th>
+							<th width="125px;"></th>
+						</tr>
+					</thead>
+					<tbody>
+						@forelse ($childs as $page)
+						<tr role="row" class="even" id="{{ $page->id }}"  {{ $page->show_page != 1 ? 'style=background:#ccc;' : '' }}>
+							<td class="sorting_1">{{ $page->id }}</td>
+							<td>{{ $page->name }}</td>
+							<td>{{ $page->description }}</td>
+							<td><i class="glyphicon glyphicon-sort" ></i></td>
+							<td>
+								<div class="btn-group">
+									{!! link_to('admin/pages/'.$page->id.'/edit', 'Edycja',  array('class' => 'btn btn-info')) !!}
+									<button type="button" class="btn btn-info dropdown-toggle"
+									data-toggle="dropdown">
+									<span class="caret"></span> <span class="sr-only">Toggle
+								Dropdown</span>
+								</button>
+								<ul class="dropdown-menu" role="menu">
+									<li>
+										{!! link_to('admin/pages/'.$page->id.'/edit', 'Edycja',  array('class' => '')) !!}
+									</li>
+									<li role="separator" class="divider"></li>
+									<li>{!! Form::open(array('method' => 'DELETE', 'route' =>
+										array('admin.pages.destroy', $page->id))) !!}
+										{!! Form::button('<i class="fa  fa-trash" style="margin-right: 10px;"></i>Usuń', array('onclick' => 'return confirm("Czy jesteś pewny że chcesz usunąć ?");', 'type' => 'submit', 'class' => 'btn-link deleteBtn')) !!}
+									{!! Form::close() !!}</li>
+									<li role="separator" class="divider"></li>
+									<li>
+										<a href="{{URL::to('/')}}/prev/{{ $page->id}}/{{ $page->seo}}" target="_blank"><i class="fa fa-eye"></i>Podgląd</a></li>
+										@if ($page->show_page)
+										<li><a href="#"><i class="fa  fa-square-o "></i>Wyłącz</a></li>
+										@else
+										<li><a href="#"><i class="fa fa-check-square-o"></i>Włącz</a></li>
+										@endif
+									</ul>
+								</div>
+							</td>
+						</tr>
+						@empty
+						<tr>
+							<td colspan="5">brak rekordów</td>
+						</tr>
+						@endforelse
+					</tbody>
+				</table>
+			</div>
+			@endif
+		</div>
 	</div>
 
-@endif
-
-{!!
-Form::model($page,array('route' => array('admin.pages.update', $page->id), 'method' => 'PUT','files'=>true)) !!}
+	{!!
+	Form::model($page,array('route' => array('admin.pages.update', $page->id), 'method' => 'PUT','files'=>true)) !!}
 	<div class="col-md-9">
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs">
@@ -101,50 +94,41 @@ Form::model($page,array('route' => array('admin.pages.update', $page->id), 'meth
 					</div>
 				</div>
 				<div class="tab-pane" id="galleryTab" style="overflow: hidden;">
-
-
-						<div class="control-group">
-							<div class="controls">
-								{!! Form::file('images[]', array('multiple'=>true)) !!}
-								<p class="e	rrors">{!!$errors->first('images')!!}</p>
-							</div>
-						</div>
-
-					<hr />
-					<div  id="sortable">
-					@foreach($file as $photo)
-					<div class="col-md-3">
-						<div class="box {{ $photo->masterPhoto == 1 ? 'box-success' : 'box-default' }} collapsed-box thumbPrev">
-							<div class="box-header with-border">
-								<div class="box-title">
-									<img src="{{ asset('/uploads/'.$photo->pages_id.'/thumb/'.$photo->name) }}" alt="{{ $photo->file_name != '' ? $photo->file_name : $photo->name }}" width="100%"  title="{{ $photo->masterPhoto }}"/>
-								</div>
-								<div class="box-tools pull-right">
-									<button type="button" class="btn btn-box-tool"
-									data-widget="collapse" style="background: #000;">
-									<i class="fa fa-gears" style="color: #fff;padding: 6px;font-size: 18px;"></i>
-									</button>
-								</div>
-							</div>
-							<div class="box-body">
-								<div class="form-group">{!! Form::text('filename['.$photo->id.']', $photo->file_name,
-								array('class' => 'form-control', 'placeholder' => 'Nazwa')) !!}</div>
-								<div class="checkbox">
-									<label>{!! Form::checkbox('masterPhoto['.$photo->id.']', null, $photo->masterPhoto,
-									array('class' => 'minimal')) !!} ustaw jako główne</label>
-								</div>
-								<hr />
-								<div class="btn btn-block btn-danger btn-sm del" delID="{{ $photo->id }}">usuń</div>
-
-
-							</div>
-
-
-
+					<div class="control-group">
+						<div class="controls">
+							{!! Form::file('images[]', array('multiple'=>true)) !!}
+							<p class="e	rrors">{!!$errors->first('images')!!}</p>
 						</div>
 					</div>
-
-					@endforeach
+					<hr />
+					<div  id="sortable">
+						@foreach($file as $photo)
+						<div class="col-md-3">
+							<div class="box {{ $photo->masterPhoto == 1 ? 'box-success' : 'box-default' }} collapsed-box thumbPrev">
+								<div class="box-header with-border">
+									<div class="box-title">
+										<img src="{{ asset('/uploads/'.$photo->pages_id.'/thumb/'.$photo->name) }}" alt="{{ $photo->file_name != '' ? $photo->file_name : $photo->name }}" width="100%"  title="{{ $photo->masterPhoto }}"/>
+									</div>
+									<div class="box-tools pull-right">
+										<button type="button" class="btn btn-box-tool"
+										data-widget="collapse" style="background: #000;">
+										<i class="fa fa-gears" style="color: #fff;padding: 6px;font-size: 18px;"></i>
+										</button>
+									</div>
+								</div>
+								<div class="box-body">
+									<div class="form-group">{!! Form::text('filename['.$photo->id.']', $photo->file_name,
+									array('class' => 'form-control', 'placeholder' => 'Nazwa')) !!}</div>
+									<div class="checkbox">
+										<label>{!! Form::checkbox('masterPhoto['.$photo->id.']', null, $photo->masterPhoto,
+										array('class' => 'minimal')) !!} ustaw jako główne</label>
+									</div>
+									<hr />
+									<div class="btn btn-block btn-danger btn-sm del" delID="{{ $photo->id }}">usuń</div>
+								</div>
+							</div>
+						</div>
+						@endforeach
 					</div>
 				</div>
 				<div class="tab-pane" id="seoTab">
@@ -243,6 +227,6 @@ Form::model($page,array('route' => array('admin.pages.update', $page->id), 'meth
 			</div>
 		</div>
 	</div>
-{!! Form::close() !!}
+	{!! Form::close() !!}
 </div>
- @endsection
+@endsection

@@ -129,16 +129,4 @@ $("#sortable").sortable({
 });
 
 
-</script><<style type="text/css" media="screen">
-    .ui-state-highlight{
-        background: #3c8dbc;
-
-    }
-
-
-
-
-  #sortable div { overflow: hidden;
-}
-
-</style>
+</script>

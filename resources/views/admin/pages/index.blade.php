@@ -1,8 +1,6 @@
 @extends('admin.template') @section('content')
 <div class="row">
 	<div class="col-xs-12">
-
-
 		<div class="text-content">
 			<div class="span7 offset1">
 				<div class="box">
@@ -26,9 +24,9 @@
 							</thead>
 							<tbody>
 								@forelse ($pages as $page)
-								<tr role="row" class="even" id="{{ $page->id }}">
-									<td class="sorting_1">{{ $page->id }}</td>
-									<td>{{ $page->name }}</td>
+								<tr role="row" class="even" id="{{ $page->id }}" {{ $page->show_page != 1 ? 'style=background:#ccc;' : '' }}>
+									<td class="sorting_1" >{{ $page->id }}</td>
+									<td>{{ $page->name }} </td>
 									<td>{{ $page->description }}</td>
 									<td><i class="glyphicon glyphicon-sort" ></i></td>
 									<td>
@@ -41,7 +39,7 @@
 										</button>
 										<ul class="dropdown-menu" role="menu">
 											<li>
-												{!! link_to('admin/pages/'.$page->id.'/edit', 'Kopia',  array('class' => '')) !!}
+												{!! link_to('admin/pages/'.$page->id.'/edit', 'Edycja',  array('class' => '')) !!}
 											</li>
 											<li role="separator" class="divider"></li>
 											<li>{!! Form::open(array('method' => 'DELETE', 'route' =>

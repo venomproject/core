@@ -1,12 +1,14 @@
 .deleteBtn{
-	color: #f00;
-	padding: 0 20px;
+color: #f00;
+padding: 0 20px;
 }
-
 .deleteBtn:hover{
-	color: #f00;
+color: #f00;
 }
-
 .ui-sortable-handle{
-	cursor: pointer;
+cursor: pointer;
 }
+.ui-state-highlight{
+background: #3c8dbc;
+}
+#sortable div { overflow: hidden;}

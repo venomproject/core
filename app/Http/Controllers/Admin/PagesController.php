@@ -45,8 +45,17 @@ class PagesController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function create() {
-		return view('admin.pages.create');
+	public function create($id = null) {
+
+		$parentCategory = Pages::lists('name', 'id')->prepend('-- brak --', 0);
+
+		return view('admin.pages.create')->with([
+			'parentID' => $id,
+			'urlPath' => 'pages',
+			'title' => 'Nowa strona',
+			'parentCategory' => $parentCategory,
+		]);
+
 	}
 
 	/**
