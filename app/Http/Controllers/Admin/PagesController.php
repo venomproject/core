@@ -77,7 +77,8 @@ class PagesController extends Controller {
 			$input['seo'] = Str::slug($request->input('name'));
 		}
 
-		Pages::create($input);
+		$a = Pages::create($input);
+
 		return redirect('admin/pages')->with('status', 'Wpis został dodany pomyślnie');
 	}
 
