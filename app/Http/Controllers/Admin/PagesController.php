@@ -77,9 +77,75 @@ class PagesController extends Controller {
 			$input['seo'] = Str::slug($request->input('name'));
 		}
 
-		$a = Pages::create($input);
+		$input['pages_id'] = ($request->input('pages_id') != 0) ? $request->input('pages_id') : null;
+		$newPage = Pages::create($input);
 
+		$this->uploadFiles($newPage['id'], $request->only('filename', 'remove', 'masterPhoto'));
 		return redirect('admin/pages')->with('status', 'Wpis został dodany pomyślnie');
+	}
+
+	protected function uploadFiles($pageID, $fileData) {
+
+		if (!File::isDirectory('uploads/' . $pageID)) {
+			File::makeDirectory('uploads/' . $pageID);
+			File::makeDirectory('uploads/' . $pageID . '/thumb');
+		}
+
+		$files = Input::file('images');
+
+		$file_count = count($files);
+		$uploadcount = 0;
+		foreach ($files as $file) {
+			$rules = array(
+				'file' => 'required',
+			); // 'required|mimes:png,gif,jpeg,txt,pdf,doc'
+			$validator = Validator::make(array(
+				'file' => $file,
+			), $rules);
+			if ($validator->passes()) {
+				$destinationPath = 'uploads/' . $pageID;
+				$filename = $file->getClientOriginalName();
+				$upload_success = $file->move($destinationPath, $filename);
+
+				$photo = new Files();
+				$photo->name = $filename;
+				$photo->file_name = $filename;
+				$photo->pages_id = $pageID;
+				if ($file_count - 1 == $uploadcount) {
+					$photo->masterPhoto = 1;
+				}
+
+				$photo->save();
+
+				$img = \Image::make('uploads/' . $pageID . '/' . $filename);
+				$img->resize(320, 240);
+				$img->save('uploads/' . $pageID . '/thumb/' . $filename);
+
+				$uploadcount++;
+			}
+		}
+
+		if ($fileData['filename'] != null) {
+
+			foreach ($fileData['filename'] as $key => $value) {
+				$rowFile = Files::find($key);
+
+				if (isset($fileData['remove'][$key])) {
+					File::delete('uploads/' . $pageID . '/' . $rowFile->name);
+					File::delete('uploads/' . $pageID . '/thumb/' . $rowFile->name);
+					Files::find($key)->delete();
+				}
+
+				$rowFile->file_name = $value;
+
+				if (isset($fileData['masterPhoto'][$key])) {
+					$rowFile->masterPhoto = 1;
+				}
+
+				$rowFile->save();
+
+			}
+		}
 	}
 
 	/**
@@ -130,61 +196,7 @@ class PagesController extends Controller {
 	 * @return Response
 	 */
 	public function update(PageRequest $request, $id) {
-		$files = Input::file('images');
 
-		$file_count = count($files);
-		$uploadcount = 0;
-		foreach ($files as $file) {
-			$rules = array(
-				'file' => 'required',
-			); // 'required|mimes:png,gif,jpeg,txt,pdf,doc'
-			$validator = Validator::make(array(
-				'file' => $file,
-			), $rules);
-			if ($validator->passes()) {
-				$destinationPath = 'uploads/' . $id;
-				$filename = $file->getClientOriginalName();
-				$upload_success = $file->move($destinationPath, $filename);
-
-				$photo = new Files();
-				$photo->name = $filename;
-				$photo->file_name = $filename;
-				$photo->pages_id = $id;
-				if ($file_count - 1 == $uploadcount) {
-					$photo->masterPhoto = 1;
-				}
-
-				$photo->save();
-
-				$img = \Image::make('uploads/' . $id . '/' . $filename);
-				$img->resize(320, 240);
-				$img->save('uploads/' . $id . '/thumb/' . $filename);
-
-				$uploadcount++;
-			}
-		}
-
-		if ($request->input('filename') != null) {
-
-			foreach ($request->input('filename') as $key => $value) {
-				$rowFile = Files::find($key);
-
-				if ($request->input('remove.' . $key)) {
-					File::delete('uploads/' . $id . '/' . $rowFile->name);
-					File::delete('uploads/' . $id . '/thumb/' . $rowFile->name);
-					Files::find($key)->delete();
-				}
-
-				$rowFile->file_name = $value;
-
-				if ($request->input('masterPhoto.' . $key)) {
-					$rowFile->masterPhoto = 1;
-				}
-
-				$rowFile->save();
-
-			}
-		}
 		$page = Pages::find($id);
 
 		$page->name = $request->input('name');
@@ -202,6 +214,8 @@ class PagesController extends Controller {
 		$page->meta_title = $request->input('meta_title');
 
 		$page->save();
+
+		$this->uploadFiles($id, $request->only('filename', 'remove', 'masterPhoto'));
 
 		return redirect('admin/pages')->with('status', 'Wpis został pomyślnie zmodyfikowany');
 	}

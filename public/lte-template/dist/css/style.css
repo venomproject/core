@@ -12,3 +12,7 @@ cursor: pointer;
 background: #3c8dbc;
 }
 #sortable div { overflow: hidden;}
+
+#galleryTab{
+	min-height: 400px;
+}
