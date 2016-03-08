@@ -227,7 +227,15 @@ class PagesController extends Controller {
 	 * @return Response
 	 */
 	public function destroy($id) {
-		Pages::destroy($id);
+		$more = Pages::where('pages_id', $id)->get();
+
+		if (count($more) > 0) {
+
+			return redirect('admin/pages')->with('info', 'Nie można usunąc kategorii do której są przypisane inne strony.');
+
+		} else {
+			Pages::destroy($id);
+		}
 		return redirect('admin/pages')->with('status', 'Wpis został pomyślnie usunięty');
 	}
 

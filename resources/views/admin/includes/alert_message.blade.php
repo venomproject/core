@@ -9,6 +9,17 @@
     </div>
 @endif
 
+@if (session('info'))
+<div class="alert alert-warning">
+	<button type="button" class="close" data-dismiss="alert"
+		aria-hidden="true">&times;</button>
+	<h4>
+		<i class="icon fa fa-info"></i> Info!
+	</h4>
+		{{ session('info') }}
+</div>
+@endif
+
 @if (count($errors) > 0)
 <div class="alert alert-danger">
 	<button type="button" class="close" data-dismiss="alert"
