@@ -32,8 +32,6 @@ class CreatePagesTable extends Migration {
 			$table->foreign('users_id')->references('id')->on('users');
 			$table->integer('languages_id')->unsigned()->default(1);
 			$table->foreign('languages_id')->references('id')->on('languages');
-
-			$table->rememberToken();
 			$table->timestamps();
 		});
 

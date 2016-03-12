@@ -8,7 +8,7 @@
 						<i class="fa fa-edit"></i>
 						<h3 class="box-title">Lista</h3>
 						<div class="box-tools col-sm-2">
-							<a href="/admin/pages/create" class="btn btn-block btn-success">Dodaj</a>
+							<a href="/admin/slider/create" class="btn btn-block btn-success">Dodaj</a>
 						</div>
 					</div>
 					<div class="box-body">
@@ -23,15 +23,15 @@
 								</tr>
 							</thead>
 							<tbody>
-								@forelse ($pages as $page)
-								<tr role="row" class="even" id="{{ $page->id }}" {{ $page->show_page != 1 ? 'style=background:#ccc;' : '' }}>
+								@forelse ($rows as $page)
+								<tr role="row" class="even" id="{{ $page->id }}">
 									<td class="sorting_1" >{{ $page->id }}</td>
 									<td>{{ $page->name }} </td>
 									<td>{{ $page->description }}</td>
 									<td><i class="glyphicon glyphicon-sort" ></i></td>
 									<td>
 										<div class="btn-group">
-											{!! link_to('admin/pages/'.$page->id.'/edit', 'Edycja',  array('class' => 'btn btn-info')) !!}
+											{!! link_to('admin/slider/'.$page->id.'/edit', 'Edycja',  array('class' => 'btn btn-info')) !!}
 											<button type="button" class="btn btn-info dropdown-toggle"
 											data-toggle="dropdown">
 											<span class="caret"></span> <span class="sr-only">Toggle
@@ -39,23 +39,13 @@
 										</button>
 										<ul class="dropdown-menu" role="menu">
 											<li>
-												{!! link_to('admin/pages/'.$page->id.'/edit', 'Edycja',  array('class' => '')) !!}
+												{!! link_to('admin/slider/'.$page->id.'/edit', 'Edycja',  array('class' => '')) !!}
 											</li>
 											<li role="separator" class="divider"></li>
 											<li>{!! Form::open(array('method' => 'DELETE', 'route' =>
-												array('admin.pages.destroy', $page->id))) !!}
+												array('admin.slider.destroy', $page->id))) !!}
 												{!! Form::button('<i class="fa  fa-trash" style="margin-right: 10px;"></i>Usuń', array('onclick' => 'return confirm("Czy jesteś pewny że chcesz usunąć ?");', 'type' => 'submit', 'class' => 'btn-link deleteBtn')) !!}
 											{!! Form::close() !!}</li>
-											<li role="separator" class="divider"></li>
-											<li>
-												<a href="{{URL::to('/')}}/prev/{{ $page->id}}/{{ $page->seo}}" target="_blank"><i class="fa fa-eye"></i>Podgląd</a></li>
-												<!--
-												@if ($page->show_page)
-												<li><a href="#"><i class="fa  fa-square-o "></i>Wyłącz</a></li>
-												@else
-												<li><a href="#"><i class="fa fa-check-square-o"></i>Włącz</a></li>
-												@endif
-												-->
 											</ul>
 										</div>
 									</td>
@@ -70,12 +60,12 @@
 						<div class="col-xs-12">
 							<div class="row">
 								<div class="col-sm-5">
-									Wpisy od <b>{!! ($pages->currentPage()-1)*$pages->perPage() !!}</b>
-									do <b>{!! $pages->perPage()*$pages->currentPage() !!}</b> <br />Łącznie
-									: <strong>{!! $pages->total() !!}</strong>
+									Wpisy od <b>{!! ($rows->currentPage()-1)*$rows->perPage() !!}</b>
+									do <b>{!! $rows->perPage()*$rows->currentPage() !!}</b> <br />Łącznie
+									: <strong>{!! $rows->total() !!}</strong>
 								</div>
 								<div class="col-sm-7">
-									<div class="pull-right">{!! $pages->render() !!}</div>
+									<div class="pull-right">{!! $rows->render() !!}</div>
 								</div>
 							</div>
 						</div>

@@ -25,6 +25,7 @@
                 </ul>
             </li>
             <li><a href="documentation/index.html"><i class="fa fa-book"></i> Documentation</a></li>
+            <li><a href="{{ url('/admin/slider') }}"><i class="fa fa-photo "></i> Slider</a></li>
             <li class="header">LABELS</li>
             <li><a href="#"><i class="fa fa-circle-o text-danger"></i> Important</a></li>
             <li><a href="#"><i class="fa fa-circle-o text-warning"></i> Warning</a></li>

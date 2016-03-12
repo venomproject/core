@@ -20,10 +20,10 @@ Route::group(['middleware' => ['web', 'auth'], 'prefix' => '/admin', 'namespace'
 
 	Route::resource('/pages', 'PagesController');
 	Route::get('/pages/create/{id}', 'PagesController@create')->where('id', '[0-9]+');
-
 	Route::post('/seo_generator', 'PagesController@seo_generator');
-
 	Route::post('changePositionInTable', 'PagesController@changePosition');
+
+	Route::resource('/slider', 'SliderController');
 
 	View::composer('admin.template', '\App\Http\ViewComposers\AdminComposer');
 

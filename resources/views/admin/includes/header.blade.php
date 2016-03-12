@@ -28,7 +28,6 @@
                     </ul>
                 </li>
                 <li class="user user-menu">
-
                     <a href="{{ URL::to('/logout') }}" >
                         <span>Wyloguj</span>
                     </a>

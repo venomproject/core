@@ -32,7 +32,7 @@ class PagesController extends Controller {
 	 * @return Response
 	 */
 	public function index() {
-		$rows = Pages::whereNull('pages_id')->orderBy('position', 'asc')->paginate(20);
+		$rows = Pages::whereNull('pages_id')->orderBy('position', 'asc')->paginate(10);
 
 		return view('admin.pages.index', [
 			'pages' => $rows,
