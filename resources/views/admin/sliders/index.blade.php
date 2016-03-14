@@ -18,7 +18,7 @@
 									<th>ID</th>
 									<th>Nazwa</th>
 									<th>Opis</th>
-									<th>Pozycja</th>
+
 									<th width="125px;"></th>
 								</tr>
 							</thead>
@@ -28,7 +28,7 @@
 									<td class="sorting_1" >{{ $page->id }}</td>
 									<td>{{ $page->name }} </td>
 									<td>{{ $page->description }}</td>
-									<td><i class="glyphicon glyphicon-sort" ></i></td>
+
 									<td>
 										<div class="btn-group">
 											{!! link_to('admin/slider/'.$page->id.'/edit', 'Edycja',  array('class' => 'btn btn-info')) !!}
