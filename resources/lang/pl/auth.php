@@ -1,7 +1,7 @@
 <?php
-return [ 
-		
-		/*
+return [
+
+	/*
 		 * |--------------------------------------------------------------------------
 		 * | Authentication Language Lines
 		 * |--------------------------------------------------------------------------
@@ -11,10 +11,10 @@ return [
 		 * | these language lines according to your application's requirements.
 		 * |
 		 */
-		
-		'failed' => 'Dane niepoprawne',
-		'throttle' => 'Zbyt duża ilość prób nieudanego logowania. Proszę spróbować za  :seconds seconds.',
-		'remember' => 'Zapamiętaj mnie',
-		'login' => 'Zaloguj' 
+
+	'failed' => 'Dane niepoprawne',
+	'throttle' => 'Zbyt duża ilość prób nieudanego logowania. Proszę spróbować za  :seconds sekund.',
+	'remember' => 'Zapamiętaj mnie',
+	'login' => 'Zaloguj',
 ]
 ;
